@@ -15,4 +15,5 @@ public class Hobby implements Serializable {
     @SerializedName("name")
     @Expose
     private String name;
+    private Boolean selected = false;
 }

@@ -118,7 +118,8 @@ public class StudentDetailActivity extends AppCompatActivity implements StudentD
                         .placeholder(new ColorDrawable(getResources().getColor(R.color.lightGray)))
 //                        .error(context.getDrawable(R.drawable.png_no_image_available_pp))
                         .diskCacheStrategy(DiskCacheStrategy.RESOURCE))
-                .load(ApiURL.URL_IMAGE + datas.getPhoto())
+                .load("https://avatars3.githubusercontent.com/u/26448769?s=400&u=b15a92b4f37739ffd1068dbf671a9126a14b110a&v=4")
+//                .load(ApiURL.URL_IMAGE + datas.getPhoto())
                 .into(rivSlipPhoto);
 
         tvFullName.setText(datas.getFirstName() + " " + datas.getLastName());

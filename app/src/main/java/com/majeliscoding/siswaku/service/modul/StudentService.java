@@ -1,11 +1,14 @@
 package com.majeliscoding.siswaku.service.modul;
 
+import com.majeliscoding.siswaku.model.Hobby;
+import com.majeliscoding.siswaku.model.Profession;
 import com.majeliscoding.siswaku.model.ResponseApi;
 import com.majeliscoding.siswaku.model.ResponseApiPage;
 import com.majeliscoding.siswaku.model.Student;
 import com.majeliscoding.siswaku.service.ApiURL;
 
 import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -51,4 +54,16 @@ public interface StudentService {
         @Header("Authorization") String token,
         @Path("id") Integer id
     );
+
+    @GET(ApiURL.LIST_HOBBY)
+    Call<ResponseApi<List<Hobby>>> getListHobby(
+            @Header("Authorization") String token
+    );
+
+    @GET(ApiURL.LIST_PROFESSION)
+    Call<ResponseApi<List<Profession>>> getListProfession(
+            @Header("Authorization") String token
+    );
+
+
 }

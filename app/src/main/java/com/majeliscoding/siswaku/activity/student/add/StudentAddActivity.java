@@ -5,9 +5,11 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -16,14 +18,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.textfield.TextInputEditText;
 import com.majeliscoding.siswaku.R;
+import com.majeliscoding.siswaku.adapter.HobbyAdapter;
+import com.majeliscoding.siswaku.adapter.SpinnerAdapter;
 import com.majeliscoding.siswaku.helper.ImagePicker;
 import com.majeliscoding.siswaku.helper.Utils;
-import com.google.android.material.textfield.TextInputEditText;
+import com.majeliscoding.siswaku.model.Hobby;
+import com.majeliscoding.siswaku.model.Profession;
 import com.majeliscoding.siswaku.model.Student;
 import com.majeliscoding.siswaku.service.ApiClient;
 import com.tsongkha.spinnerdatepicker.DatePicker;
@@ -35,10 +46,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.Locale;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,7 +58,7 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.RequestBody;
 
-public class StudentAddActivity extends AppCompatActivity implements StudentAddContract.View, DatePickerDialog.OnDateSetListener  {
+public class StudentAddActivity extends AppCompatActivity implements StudentAddContract.View, DatePickerDialog.OnDateSetListener {
 
     @BindView(R.id.btnBack)
     ImageView btnBack;
@@ -76,13 +88,22 @@ public class StudentAddActivity extends AppCompatActivity implements StudentAddC
     TextInputEditText etAddress;
     @BindView(R.id.btnSave)
     Button btnSave;
+    @BindView(R.id.spProfesion)
+    AppCompatSpinner spProfesion;
+    @BindView(R.id.rvHobby)
+    RecyclerView rvHobby;
 
     private static final int PICK_IMAGE_ID = 234;
+    @BindView(R.id.relPhoto)
+    RelativeLayout relPhoto;
     private Dialog progressDialog;
     private Bitmap bitmap;
     private String dateOfBirth = "";
     private StudentAddPresenter mActionListener;
     private Student datas;
+    private HobbyAdapter hobbyAdapter;
+    private String idHobby, idProfession, hobby, profession;
+    private List<Hobby> listHobby;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +111,12 @@ public class StudentAddActivity extends AppCompatActivity implements StudentAddC
         setContentView(R.layout.activity_student_add);
         ButterKnife.bind(this);
 
-        progressDialog  = Utils.progressDialog(this);
+        progressDialog = Utils.progressDialog(this);
         mActionListener = new StudentAddPresenter(this, this);
-        datas           = (Student) getIntent().getSerializableExtra("datas");
+        datas = (Student) getIntent().getSerializableExtra("datas");
+
+        mActionListener.loadListProfession();
+        mActionListener.loadListHobby();
 
         if (datas != null) {
             tvTitle.setText(getResources().getString(R.string.update_data));
@@ -108,18 +132,31 @@ public class StudentAddActivity extends AppCompatActivity implements StudentAddC
 
             if (datas.getGender().equals("M")) rbMale.setChecked(true);
             else rbFemale.setChecked(true);
+
+            Glide.with(this)
+                    .setDefaultRequestOptions(new RequestOptions()
+                            .placeholder(new ColorDrawable(getResources().getColor(R.color.lightGray)))
+//                        .error(context.getDrawable(R.drawable.png_no_image_available_pp))
+                            .diskCacheStrategy(DiskCacheStrategy.RESOURCE))
+                    .load("https://avatars3.githubusercontent.com/u/26448769?s=400&u=b15a92b4f37739ffd1068dbf671a9126a14b110a&v=4")
+//                    .load(ApiURL.URL_IMAGE + datas.getPhoto())
+                    .into(civPhoto);
         }
     }
 
-    @OnClick({R.id.btnBack, R.id.civPhoto, R.id.etDateOfBirth, R.id.btnSave})
+    @OnClick({R.id.btnBack, R.id.relPhoto, R.id.civPhoto, R.id.etDateOfBirth, R.id.btnSave})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnBack:
                 onBackPressed();
                 break;
             case R.id.civPhoto:
-                Intent chooseImageIntent = ImagePicker.getPickImageIntent(this);
-                startActivityForResult(chooseImageIntent, PICK_IMAGE_ID);
+                Intent chooseImageIntent1 = ImagePicker.getPickImageIntent(this);
+                startActivityForResult(chooseImageIntent1, PICK_IMAGE_ID);
+                break;
+            case R.id.relPhoto:
+                Intent chooseImageIntent2 = ImagePicker.getPickImageIntent(this);
+                startActivityForResult(chooseImageIntent2, PICK_IMAGE_ID);
                 break;
             case R.id.etDateOfBirth:
                 if (dateOfBirth.equals("")) {
@@ -130,21 +167,28 @@ public class StudentAddActivity extends AppCompatActivity implements StudentAddC
                 }
                 break;
             case R.id.btnSave:
+                for (int i = 0; i < listHobby.size(); i++) {
+                    if (listHobby.get(i).getSelected()) {
+                        idHobby = listHobby.get(i).getId().toString();
+                        hobby   = listHobby.get(i).getName();
+                    }
+                }
+
                 HashMap<String, RequestBody> params = new HashMap<>();
                 params.put("first_name", ApiClient.createRequestBody(etFirstName.getText().toString()));
                 params.put("last_name", ApiClient.createRequestBody(etLastName.getText().toString()));
-                params.put("gender", ApiClient.createRequestBody(rbMale.isChecked()?"M":"F"));
+                params.put("gender", ApiClient.createRequestBody(rbMale.isChecked() ? "M" : "F"));
                 params.put("born_place", ApiClient.createRequestBody(etPlaceOfBirth.getText().toString()));
                 params.put("born_date", ApiClient.createRequestBody(dateOfBirth));
                 params.put("phone", ApiClient.createRequestBody(etPhoneNumber.getText().toString()));
                 params.put("address", ApiClient.createRequestBody(etAddress.getText().toString()));
-                params.put("profession_id", ApiClient.createRequestBody("1"));
-                params.put("hobby_id", ApiClient.createRequestBody("1"));
+                params.put("profession_id", ApiClient.createRequestBody(idProfession));
+                params.put("hobby_id", ApiClient.createRequestBody(idHobby));
 
                 if (datas == null)
-                     mActionListener.loadCreateStudent(params, createFile(bitmap));
+                    mActionListener.loadCreateStudent(params, createFile(bitmap));
                 else
-                    mActionListener.loadUpdateStudent(datas.getId(),params, createFile(toBitmap(civPhoto)));
+                    mActionListener.loadUpdateStudent(datas.getId(), params, createFile(toBitmap(civPhoto)));
 
                 break;
         }
@@ -162,18 +206,80 @@ public class StudentAddActivity extends AppCompatActivity implements StudentAddC
 
         datas.setFirstName(etFirstName.getText().toString());
         datas.setLastName(etLastName.getText().toString());
-        datas.setGender(rbMale.isChecked()?"M":"F");
+        datas.setGender(rbMale.isChecked() ? "M" : "F");
         datas.setBornPlace(etPlaceOfBirth.getText().toString());
         datas.setBornDate(dateOfBirth);
         datas.setPhone(etPhoneNumber.getText().toString());
         datas.setAddress(etAddress.getText().toString());
-        datas.getHobby().setName(datas.getHobby().getName());
-        datas.getProfession().setName(datas.getProfession().getName());
+        datas.getHobby().setId(Integer.parseInt(idHobby));
+        datas.getHobby().setName(hobby);
+        datas.getProfession().setId(Integer.parseInt(idProfession));
+        datas.getProfession().setName(profession);
 
         Intent i = new Intent();
         i.putExtra("datas", datas);
         setResult(RESULT_OK, i);
         finish();
+    }
+
+    @Override
+    public void showListHobby(List<Hobby> data) {
+        listHobby = new ArrayList<>();
+        listHobby.addAll(data);
+
+        if (datas != null) {
+            for (int i = 0; i < listHobby.size(); i++) {
+                if (listHobby.get(i).getName().equals(datas.getHobby().getName())) {
+                    listHobby.get(i).setSelected(true);
+                    idHobby = listHobby.get(i).getId().toString();
+                    hobby   = listHobby.get(i).getName();
+                }
+            }
+        }
+
+        hobbyAdapter = new HobbyAdapter(this, listHobby);
+        rvHobby.setLayoutManager(new GridLayoutManager(this, 2));
+        rvHobby.setAdapter(hobbyAdapter);
+
+
+    }
+
+    @Override
+    public void showListProfession(List<Profession> data) {
+        ArrayList<String> list = new ArrayList<>();
+        list.add(getResources().getString(R.string.select_profession));
+
+        for (Profession item : data) {
+            list.add(item.getName());
+        }
+
+        SpinnerAdapter adapter = new SpinnerAdapter(this, R.layout.spinner_item, list);
+        spProfesion.setAdapter(adapter);
+        spProfesion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0) {
+                    idProfession = data.get(position - 1).getId().toString();
+                    profession = data.get(position - 1).getName();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        if (datas != null) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).equals(datas.getProfession().getName())) {
+                    spProfesion.setSelection(i);
+                    idProfession = datas.getProfession().getId().toString();
+                    profession   = datas.getProfession().getName();
+                }
+            }
+        }
+
     }
 
     @Override
@@ -224,7 +330,7 @@ public class StudentAddActivity extends AppCompatActivity implements StudentAddC
         File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES)
                 , System.currentTimeMillis() + "_image.jpeg");
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bos);
         byte[] bitmapdata = bos.toByteArray();
 
         try {
@@ -238,8 +344,8 @@ public class StudentAddActivity extends AppCompatActivity implements StudentAddC
         return file;
     }
 
-    private Bitmap toBitmap(CircleImageView view){
-        Bitmap bitmap = ((BitmapDrawable)view.getDrawable()).getBitmap();
+    private Bitmap toBitmap(CircleImageView view) {
+        Bitmap bitmap = ((BitmapDrawable) view.getDrawable()).getBitmap();
         return bitmap;
     }
 }

@@ -11,4 +11,7 @@ public class ApiURL {
     public static final String UPDATE_STUDENT = "people/update/{id}";
     public static final String DELETE_STUDENT = "people/delete/{id}";
 
+    public static final String LIST_HOBBY     = "hobby/index";
+    public static final String LIST_PROFESSION= "profession/index";
+
 }

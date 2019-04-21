@@ -31,4 +31,5 @@
     <string name="desc_confirm">Apakah Anda yakin\ningin menghapusnya?</string>
     <string name="no">Tidak</string>
     <string name="yes">Ya</string>
+    <string name="select_profession">Pilih Profesi</string>
 </resources>
