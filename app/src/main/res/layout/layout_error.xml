@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/relError"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/png_failed" />
+
+        <TextView
+            android:id="@+id/tvTitleError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_middle"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="@string/connection_failed"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/font_small" />
+
+        <TextView
+            android:id="@+id/tvDescError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:fontFamily="@font/raleway_regular"
+            android:text="@string/desc_error"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/font_extra_small" />
+
+        <TextView
+            android:id="@+id/tvDescErrorDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large"
+            android:fontFamily="@font/raleway_regular"
+            android:text="@string/desc_error"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/font_extra_super_small"
+            android:textStyle="italic|bold" />
+
+        <Button
+            android:id="@+id/btnTryAgain"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large"
+            android:layout_marginTop="@dimen/spacing_middle"
+            android:background="@drawable/bg_fill_blue_circle"
+            android:textColor="@android:color/white"
+            android:text="@string/try_again"
+            android:textAlignment="center"
+            android:textSize="@dimen/font_extra_small"
+            android:textAllCaps="false"/>
+    </LinearLayout>
+
+</RelativeLayout>
+

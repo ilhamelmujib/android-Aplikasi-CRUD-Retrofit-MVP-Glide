@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--genaral spacing-->
+    <dimen name="elevation">3dp</dimen>
+    <dimen name="spacing_xsmall">4dp</dimen>
+    <dimen name="spacing_small">5dp</dimen>
+    <dimen name="spacing_medium">7dp</dimen>
+    <dimen name="spacing_xmedium">9dp</dimen>
+    <dimen name="spacing_middle">14dp</dimen>
+    <dimen name="spacing_large">17dp</dimen>
+    <dimen name="spacing_smlarge">20dp</dimen>
+    <dimen name="spacing_mlarge">22dp</dimen>
+    <dimen name="spacing_mxlarge">27dp</dimen>
+    <dimen name="spacing_xlarge">38dp</dimen>
+    <dimen name="spacing_xmlarge">44dp</dimen>
+    <dimen name="spacing_xxlarge">54dp</dimen>
+    <dimen name="spacing_xxxlarge">58dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
+
+    <!--general size-->
+    <dimen name="font_extra_super_super_small">10sp</dimen>
+    <dimen name="font_extra_super_sup_small">12sp</dimen>
+    <dimen name="font_extra_super_small">14sp</dimen>
+    <dimen name="font_extra_small">16sp</dimen>
+    <dimen name="font_medium_small">18sp</dimen>
+    <dimen name="font_small">20sp</dimen>
+    <dimen name="font_medium">26sp</dimen>
+    <dimen name="font_large">32sp</dimen>
+
+    <!--booking item-->
+    <dimen name="promo_img_height">180dp</dimen>
+</resources>

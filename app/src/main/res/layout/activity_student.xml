@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.student.StudentActivity"
+    android:orientation="vertical"
+    android:background="@color/darkWhite">
+
+    <RelativeLayout
+        android:id="@+id/relToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="@dimen/spacing_large"
+            android:src="@drawable/ic_tag_faces_white" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/ivIcon"
+            android:fontFamily="@font/raleway_bold"
+            android:text="@string/student_data"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_medium" />
+
+        <ImageView
+            android:id="@+id/btnAdd"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="@dimen/spacing_large"
+            android:src="@drawable/ic_add"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+    <include
+        layout="@layout/layout_loading"
+        android:visibility="gone" />
+
+    <include
+        layout="@layout/layout_error"
+        android:visibility="gone" />
+
+    <include
+        layout="@layout/layout_empty"
+        android:visibility="gone" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvStudent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingEnd="@dimen/spacing_large"
+        android:paddingBottom="@dimen/spacing_large"
+        android:clipToPadding="false"
+        tools:ignore="RtlSymmetry" />
+
+
+</LinearLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--genaral spacing-->
+    <dimen name="border_small">0.5dp</dimen>
+    <dimen name="elevation">2dp</dimen>
+    <dimen name="spacing_xsmall">2dp</dimen>
+    <dimen name="spacing_small">3dp</dimen>
+    <dimen name="spacing_medium">5dp</dimen>
+    <dimen name="spacing_xmedium">7dp</dimen>
+    <dimen name="spacing_middle">10dp</dimen>
+    <dimen name="spacing_large">15dp</dimen>
+    <dimen name="spacing_smlarge">18dp</dimen>
+    <dimen name="spacing_mlarge">20dp</dimen>
+    <dimen name="spacing_mxlarge">25dp</dimen>
+    <dimen name="spacing_xlarge">35dp</dimen>
+    <dimen name="spacing_xmlarge">40dp</dimen>
+    <dimen name="spacing_xxlarge">50dp</dimen>
+    <dimen name="spacing_xxxlarge">55dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
+
+    <!--general size-->
+    <dimen name="font_extra_super_super_small">6sp</dimen>
+    <dimen name="font_extra_super_sup_small">8sp</dimen>
+    <dimen name="font_extra_super_small">10sp</dimen>
+    <dimen name="font_extra_small">12sp</dimen>
+    <dimen name="font_medium_small">14sp</dimen>
+    <dimen name="font_small">16sp</dimen>
+    <dimen name="font_medium">20sp</dimen>
+    <dimen name="font_large">26sp</dimen>
+
+    <!--booking item-->
+    <dimen name="promo_img_height">125dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="border_width">6dp</dimen>
+    <dimen name="icon_size">24dp</dimen>
+    <dimen name="height_size_button">55dp</dimen>
+    <dimen name="border_normal">1dp</dimen>
+
+</resources>

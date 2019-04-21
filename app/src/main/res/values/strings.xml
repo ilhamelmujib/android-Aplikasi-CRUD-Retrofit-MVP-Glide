@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">CRUD Retrofit</string>
+    <string name="first_name">Nama Depan</string>
+    <string name="last_name">Nama Belakang</string>
+    <string name="gender">Jenis Kelamin</string>
+    <string name="male">Laki-laki</string>
+    <string name="female">Perempuan</string>
+    <string name="phone_number">Telepon</string>
+    <string name="address">Alamat</string>
+    <string name="save">Simpan</string>
+    <string name="born_place">Tempat Lahir</string>
+    <string name="born_date">Tanggal Lahir</string>
+    <string name="add_data">Tambah Data</string>
+    <string name="student_data">Data Siswa</string>
+    <string name="please_wait">Mohon Tunggu…</string>
+    <string name="empty">Kosong</string>
+    <string name="desc_empty">Saat ini tidak ada data yang ditampilkan.</string>
+    <string name="connection_failed">Koneksi Gagal</string>
+    <string name="desc_error">Terjadi error saat memuat. Mohon untuk mencoba lagi.</string>
+    <string name="try_again">Coba lagi</string>
+    <string name="pick_image">Pilih Gambar</string>
+    <string name="siswaku">SiswaKu</string>
+    <string name="desc_siswaku">Terlalu manis untuk diceritakan.</string>
+    <string name="student_detail">Detail Siswa</string>
+    <string name="full_name">Nama Lengkap</string>
+    <string name="hobby">Hobi</string>
+    <string name="profesion">Profesi</string>
+    <string name="update_data">Update Data</string>
+    <string name="update">Update</string>
+    <string name="confirm">Konfirmasi</string>
+    <string name="desc_confirm">Apakah Anda yakin\ningin menghapusnya?</string>
+    <string name="no">Tidak</string>
+    <string name="yes">Ya</string>
+</resources>

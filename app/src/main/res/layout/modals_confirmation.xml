@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/spacing_large"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/bg_fill_white_rounded"
+        android:layout_centerInParent="true"
+        android:paddingStart="@dimen/spacing_xxxlarge"
+        android:paddingEnd="@dimen/spacing_xxxlarge"
+        android:paddingTop="@dimen/spacing_xlarge"
+        android:paddingBottom="@dimen/spacing_xxlarge"
+        >
+
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="@string/confirm"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/font_medium"
+            android:layout_marginTop="@dimen/spacing_middle"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/tvDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway_regular"
+            android:text="@string/desc_confirm"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/font_extra_small"
+            android:layout_marginTop="@dimen/spacing_large"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/spacing_smlarge"
+            >
+
+        <Button
+            android:id="@+id/btnNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_fill_red_rounded"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="@string/no"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_medium_small"
+            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/spacing_small"
+            />
+
+        <Button
+            android:id="@+id/btnYes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_fill_green_rounded"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="@string/yes"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_medium_small"
+            android:layout_weight="1"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
